@@ -90,7 +90,8 @@
             "styles": [
               "src/styles.css"
             ],
-            "scripts": []
+            "scripts": ["node-modules/bootstrap/dist/js/bootstrap.bundle.min.js",
+              "node-modules/jquery/dist/jquery.min.js"]
           }
         },
         "lint": {
