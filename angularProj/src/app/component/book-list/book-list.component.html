@@ -1,0 +1,30 @@
+<table border="1">
+  <thead>
+    <tr>
+      <th>images</th>
+      <th>SKU</th>
+      <th>DESCRIPTION</th>
+      <th>Unit Price</th>
+      <th>Image Url</th>
+      <th>Active</th>
+      <th>Units in stock</th>
+      <th>Created on</th>
+      <th>Updated on</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let book of books">
+      <td>
+        <img [src]="book.imgUrl" height="150" width="100" />
+      </td>
+      <td>{{ book.sku }}</td>
+      <td>{{ book.description }}</td>
+      <td>{{ book.unitPrice }}</td>
+      <td>{{ book.imgUrl }}</td>
+      <td>{{ book.active }}</td>
+      <td>{{ book.unitsInStock }}</td>
+      <td>{{ book.createdOn }}</td>
+      <td>{{ book.updatedOn }}</td>
+    </tr>
+  </tbody>
+</table>
