@@ -28,7 +28,7 @@ public class Book {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="id")
-	private int id;
+	private long id;
 	
 	@Column(name="sku")
 	private String sku;
@@ -59,11 +59,11 @@ public class Book {
 	private BookCategory category;
 	
 	
-	public int getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
