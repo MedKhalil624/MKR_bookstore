@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { BookCategory } from 'src/app/common/book-category';
 import { BookListService } from 'src/app/services/book-list.service';
 import { Book } from '../../common/book';
 
@@ -43,12 +44,25 @@ export class BookListComponent implements OnInit {
     },
   ];*/
   books: Book[];
+
   currentCategoryId: number;
+  searchForBooks: boolean;
   constructor(
     private _bookService: BookListService,
     private _activatedRoute: ActivatedRoute
   ) {}
+
   listBook() {
+    this.searchForBooks = this._activatedRoute.snapshot.paramMap.has('keyword');
+    if (this.searchForBooks) {
+      console.log('in search');
+      this.handleSearchedBooks();
+    } else {
+      console.log('in list');
+      this.handleListBook();
+    }
+  }
+  handleListBook() {
     const hasCategoryId: boolean = this._activatedRoute.snapshot.paramMap.has(
       'id'
     );
@@ -61,6 +75,16 @@ export class BookListComponent implements OnInit {
       this.currentCategoryId = 1;
     }
     this._bookService.getBooks(this.currentCategoryId).subscribe((data) => {
+      console.log(data);
+      this.books = data;
+    });
+  }
+  handleSearchedBooks() {
+    const searchFor: string = this._activatedRoute.snapshot.paramMap.get(
+      'keyword'
+    );
+    console.log(searchFor);
+    this._bookService.searchBook(searchFor).subscribe((data) => {
       console.log(data);
       this.books = data;
     });

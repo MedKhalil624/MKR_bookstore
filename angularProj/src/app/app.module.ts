@@ -7,15 +7,24 @@ import { AppComponent } from './app.component';
 import { BookListComponent } from './component/book-list/book-list.component';
 import { BookListService } from './services/book-list.service';
 import { PageNotFoundComponent } from './component/page-not-found/page-not-found.component';
+import { BookCategoryComponent } from './component/book-category/book-category.component';
+import { SearchComponent } from './component/search/search.component';
 
 const routes: Routes = [
   { path: 'books', component: BookListComponent },
   { path: 'category/:id', component: BookListComponent },
+  { path: 'search/:keyword', component: BookListComponent },
   { path: '', redirectTo: 'books', pathMatch: 'full' },
   { path: '**', component: PageNotFoundComponent },
 ];
 @NgModule({
-  declarations: [AppComponent, BookListComponent, PageNotFoundComponent],
+  declarations: [
+    AppComponent,
+    BookListComponent,
+    PageNotFoundComponent,
+    BookCategoryComponent,
+    SearchComponent,
+  ],
   imports: [BrowserModule, HttpClientModule, RouterModule.forRoot(routes)],
   providers: [BookListService],
   bootstrap: [AppComponent],

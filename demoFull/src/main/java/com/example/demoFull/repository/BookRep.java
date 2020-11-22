@@ -13,4 +13,7 @@ import com.example.demoFull.entity.Book;
 public interface BookRep extends JpaRepository<Book, Long> {
 	@RestResource(path="byCateg")
 	Page<Book> findByCategoryId(@Param("id") Long id, Pageable pageable );
+	
+	@RestResource(path="byKeyword")
+	Page<Book> findBySkuContaining(@Param("sku") String keyword, Pageable pageable );
 }

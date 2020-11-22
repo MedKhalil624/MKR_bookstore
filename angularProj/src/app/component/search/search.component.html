@@ -1,0 +1,20 @@
+<div class="row">
+  <div class="col-md-8">
+    <input
+      type="text"
+      #searchInput
+      class="form-control"
+      placeholder="Search for a book"
+      (keyup.enter)="searchBook(searchInput.value)"
+    />
+  </div>
+  <div class="col-md-2">
+    <button
+      type="submit"
+      (click)="searchBook(searchInput.value)"
+      class="btn btn-primary"
+    >
+      Search
+    </button>
+  </div>
+</div>
