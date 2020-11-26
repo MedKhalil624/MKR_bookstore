@@ -44,6 +44,8 @@ export class BookListComponent implements OnInit {
     },
   ];*/
   books: Book[];
+  pageOfItems: Array<Book>;
+  pageSize: number = 2;
 
   currentCategoryId: number;
   searchForBooks: boolean;
@@ -93,5 +95,14 @@ export class BookListComponent implements OnInit {
     this._activatedRoute.paramMap.subscribe(() => {
       this.listBook();
     });
+  }
+  pageClick(pageOfItems: Array<Book>) {
+    // update the current page of items
+    this.pageOfItems = pageOfItems;
+  }
+  updatePageSize(updatedValue: number) {
+    console.log(updatedValue);
+    this.pageSize = updatedValue;
+    this.listBook();
   }
 }

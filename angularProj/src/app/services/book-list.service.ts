@@ -32,6 +32,10 @@ export class BookListService {
       .get<getInterfaceBook>(searchBookUrl)
       .pipe(map((response) => response._embedded.books));
   }
+  getBook(id: number): Observable<Book> {
+    const getBookUrl = `${this.baseUrl}/${id}`;
+    return this._httpClient.get<Book>(getBookUrl);
+  }
 }
 interface getInterfaceBook {
   _embedded: {

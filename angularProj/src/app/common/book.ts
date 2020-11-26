@@ -1,4 +1,5 @@
 export class Book {
+  id: number;
   sku: string;
   description: string;
   unitPrice: number;

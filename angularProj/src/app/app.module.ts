@@ -9,10 +9,16 @@ import { BookListService } from './services/book-list.service';
 import { PageNotFoundComponent } from './component/page-not-found/page-not-found.component';
 import { BookCategoryComponent } from './component/book-category/book-category.component';
 import { SearchComponent } from './component/search/search.component';
+import { BookDetailsComponent } from './component/book-details/book-details.component';
+import {
+  JwPaginationComponent,
+  JwPaginationModule,
+} from 'jw-angular-pagination';
 
 const routes: Routes = [
   { path: 'books', component: BookListComponent },
   { path: 'category/:id', component: BookListComponent },
+  { path: 'books/:id', component: BookDetailsComponent },
   { path: 'search/:keyword', component: BookListComponent },
   { path: '', redirectTo: 'books', pathMatch: 'full' },
   { path: '**', component: PageNotFoundComponent },
@@ -24,8 +30,14 @@ const routes: Routes = [
     PageNotFoundComponent,
     BookCategoryComponent,
     SearchComponent,
+    BookDetailsComponent,
   ],
-  imports: [BrowserModule, HttpClientModule, RouterModule.forRoot(routes)],
+  imports: [
+    BrowserModule,
+    HttpClientModule,
+    RouterModule.forRoot(routes),
+    JwPaginationModule,
+  ],
   providers: [BookListService],
   bootstrap: [AppComponent],
 })
