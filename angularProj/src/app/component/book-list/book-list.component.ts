@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { BookCategory } from 'src/app/common/book-category';
 import { BookListService } from 'src/app/services/book-list.service';
 import { Book } from '../../common/book';
-
+import { NgbPaginationConfig } from '@ng-bootstrap/ng-bootstrap';
 @Component({
   selector: 'app-book-list',
   //templateUrl: './book-list.component.html',
@@ -43,16 +43,26 @@ export class BookListComponent implements OnInit {
       updatedOn: null,
     },
   ];*/
-  books: Book[];
-  pageOfItems: Array<Book>;
-  pageSize: number = 2;
+  books: Book[] = [];
+  //pageOfItems: Array<Book>;
+  //pageSize: number = 2;
 
-  currentCategoryId: number;
-  searchForBooks: boolean;
+  currentCategoryId: number = 1;
+  searchForBooks: boolean = false;
+
+  /////new properties for pagination
+  currentPage: number = 1;
+  pageSize: number = 2;
+  totalRecords: number = 0;
+  previousCategory: number = 1;
   constructor(
     private _bookService: BookListService,
-    private _activatedRoute: ActivatedRoute
-  ) {}
+    private _activatedRoute: ActivatedRoute,
+    private _config: NgbPaginationConfig
+  ) {
+    _config.maxSize = 1;
+    _config.boundaryLinks = true;
+  }
 
   listBook() {
     this.searchForBooks = this._activatedRoute.snapshot.paramMap.has('keyword');
@@ -76,33 +86,49 @@ export class BookListComponent implements OnInit {
     } else {
       this.currentCategoryId = 1;
     }
-    this._bookService.getBooks(this.currentCategoryId).subscribe((data) => {
-      console.log(data);
-      this.books = data;
-    });
+
+    if (this.currentCategoryId != this.previousCategory) {
+      this.currentPage = 1;
+    }
+    this.previousCategory = this.currentCategoryId;
+    this._bookService
+      .getBooks(this.currentCategoryId, this.currentPage - 1, this.pageSize)
+      .subscribe((data) => {
+        console.log(data);
+        this.books = data._embedded.books;
+        this.currentPage = data.page.number + 1;
+        this.totalRecords = data.page.totalElements;
+        this.pageSize = data.page.size;
+      });
   }
   handleSearchedBooks() {
     const searchFor: string = this._activatedRoute.snapshot.paramMap.get(
       'keyword'
     );
     console.log(searchFor);
-    this._bookService.searchBook(searchFor).subscribe((data) => {
-      console.log(data);
-      this.books = data;
-    });
+    this._bookService
+      .searchBook(searchFor, this.currentPage - 1, this.pageSize)
+      .subscribe((data) => {
+        console.log(data);
+        this.books = data._embedded.books;
+        this.currentPage = data.page.number + 1;
+        this.totalRecords = data.page.totalElements;
+        this.pageSize = data.page.size;
+      });
   }
   ngOnInit(): void {
     this._activatedRoute.paramMap.subscribe(() => {
       this.listBook();
     });
   }
-  pageClick(pageOfItems: Array<Book>) {
+  /*pageClick(pageOfItems: Array<Book>) {
     // update the current page of items
     this.pageOfItems = pageOfItems;
-  }
+  }*/
   updatePageSize(updatedValue: number) {
     console.log(updatedValue);
     this.pageSize = updatedValue;
+    this.currentPage = 1;
     this.listBook();
   }
 }

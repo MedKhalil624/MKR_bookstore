@@ -14,6 +14,7 @@ import {
   JwPaginationComponent,
   JwPaginationModule,
 } from 'jw-angular-pagination';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 const routes: Routes = [
   { path: 'books', component: BookListComponent },
@@ -37,6 +38,7 @@ const routes: Routes = [
     HttpClientModule,
     RouterModule.forRoot(routes),
     JwPaginationModule,
+    NgbModule,
   ],
   providers: [BookListService],
   bootstrap: [AppComponent],
