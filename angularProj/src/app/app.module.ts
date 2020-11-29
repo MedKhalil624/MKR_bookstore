@@ -15,6 +15,8 @@ import {
   JwPaginationModule,
 } from 'jw-angular-pagination';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { CartStatusComponent } from './component/cart-status/cart-status.component';
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 const routes: Routes = [
   { path: 'books', component: BookListComponent },
@@ -32,6 +34,7 @@ const routes: Routes = [
     BookCategoryComponent,
     SearchComponent,
     BookDetailsComponent,
+    CartStatusComponent,
   ],
   imports: [
     BrowserModule,
@@ -39,6 +42,7 @@ const routes: Routes = [
     RouterModule.forRoot(routes),
     JwPaginationModule,
     NgbModule,
+    NgxSpinnerModule,
   ],
   providers: [BookListService],
   bootstrap: [AppComponent],
